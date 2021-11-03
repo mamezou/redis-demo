@@ -20,19 +20,18 @@ connection.connect((err) => {
     if (err) throw err
     console.log('Table created')
   })
-  let n = 0
-  const insert = 'INSERT INTO demo (name, n) VALUES ?'
-  const values = []
+  let n = 1
   while (n < 100000) {
-    values.push(`key-${n}`, n + 1)
-    //console.log(n);
+    const post = { value: n, name: `key-${n}` }
+    const query = connection.query(
+      'INSERT INTO demo SET ?',
+      post,
+      function (error, results, fields) {
+        if (error) throw error
+        // Neat!
+      }
+    )
     n++
+    console.log(query.sql)
   }
-  connection.query(insert, [values], function (err) {
-    if (err) throw err
-    console.log('書き込み成功しました。')
-    connection.end()
-  })
-
-  console.log(values)
 })
