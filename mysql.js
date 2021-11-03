@@ -21,7 +21,7 @@ connection.connect((err) => {
     console.log('Table created')
   })
   let n = 1
-  while (n < 100000) {
+  while (n < 1000000) {
     const post = { value: n, name: `key-${n}` }
     const query = connection.query(
       'INSERT INTO demo SET ?',

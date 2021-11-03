@@ -10,9 +10,9 @@ redis.on('connect', () => {
   console.info('Redisに接続されました。')
 })
 // データ保存
-let n = 0
-while (n < 100000) {
-  redis.set(`key-${n}`, n + 1)
+let n = 1
+while (n < 1000000) {
+  redis.set(`key-${n}`, n)
   console.log(n)
   n++
 }
