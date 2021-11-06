@@ -34,4 +34,5 @@ connection.connect((err) => {
     n++
     console.log(query.sql)
   }
+  connection.end()
 })

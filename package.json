@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "faker": "^5.5.3",
     "ioredis": "^4.28.0",
     "mysql": "^2.18.1"
   }

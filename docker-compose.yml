@@ -1,11 +1,13 @@
-version: '3'
+version: '2.2'
 services:
   redis:
     image: redis:6.0.10
     volumes:
-       - redis_data:/data
+      - redis_data:/data
     ports:
-      - "6379:6379"
+      - '6379:6379'
+    cpus: 0.1
+    mem_limit: 200M
   mysql:
     image: mysql:5.7
     volumes:
@@ -17,7 +19,9 @@ services:
       MYSQL_USER: demo
       MYSQL_PASSWORD: demo
     ports:
-      - "3306:3306"
+      - '3306:3306'
+    cpus: 0.1
+    mem_limit: 200M
 volumes:
   redis_data:
   mysql_data:
