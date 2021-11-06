@@ -18,7 +18,7 @@ for (i = 1; i < 1000000; i++) {
   // 配列にデータを格納する
   datas.push({
     user,
-    score: Math.floor(Math.random() * 100000),
+    score: Math.floor(Math.random() * 1000000000),
   })
 }
 
@@ -33,16 +33,11 @@ const redis = new Redis({
 })
 
 redis.on('error', console.error)
-
 redis.del('ranking')
-console.log('Redis書き込み開始します。')
-
 datas.forEach((item) => {
   redis.zadd('ranking', item.score, item.user)
 })
-
 // 切断
-console.log('Redis書き込み終了しました。切断します')
 redis.quit()
 
 // MySQL へのデータ保存
@@ -67,12 +62,11 @@ connection.connect((err) => {
     if (err) throw err
   })
 
-  console.log('MySQL書き込み開始します。')
   // データ格納
   const writeMysql = async () => {
     await Promise.all(
-      datas.forEach(async (item) => {
-        await connection.query('INSERT INTO ranking SET ?', {
+      datas.map((item) => {
+        return connection.query('INSERT INTO ranking SET ?', {
           user: item.user,
           score: item.score,
         })
@@ -80,7 +74,6 @@ connection.connect((err) => {
     )
     // 切断
     connection.end()
-    console.log('MySQL書き込み終了しました。切断します')
   }
   writeMysql()
 })

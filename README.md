@@ -26,9 +26,10 @@ npm install ioredis
 ## Write DB
 
 ```
-# 同時に実行すると速度を比較できる。この時書き込み件数を減らしておく
 time node mysql.js
 time node redis.js
+docker-compose exec mysql mysql -u demo -p demo -e "select count(*) from demo;"
+docker-compose exec redis redis-cli keys "*"
 ```
 
 ## into docker container
