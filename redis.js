@@ -6,12 +6,10 @@ const redis = new Redis({
 })
 
 redis.on('error', console.error)
-redis.on('connect', () => {
-  console.info('Redisに接続されました。')
-})
+
 // データ保存
 let n = 1
-while (n < 1000000) {
+while (n < 10000) {
   redis.set(`key-${n}`, n)
   console.log(n)
   n++
