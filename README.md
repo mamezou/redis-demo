@@ -1,38 +1,70 @@
-## How to Start
+# Redis VS MySQL Demo
+
+このリポジトリではRedisとMySQLを用いた速度比較のデモを行います。  
+ゲームのランキングボードを想定し、RedisとMySQLの両方で検索を行い、比較します。
+
+# Requirement
+
+- Node.js（Tested version 14.17.6）
+- Docker（Tested version 20.10.14, build a224086）
+- Docker Compose（Tested version 1.29.2, build 5becea4c）
+
+# Install
+
+- Step1: Clone the repository
+
+```
+git clone https://github.com/mamezou/redis-demo.git
+cd redis-demo
+```
+
+- Step2: Up docker-compose
 
 ```
 docker-compose up -d
 ```
 
-## How to Stop
+- Step3: Install node modules
 
 ```
-docker-compose stop
+npm install
 ```
 
-## How to Delete data
+# Usage 1 : Write data to Redis and MySQL
+
+10000データをRedisとMySQLに書き込み、速度を比較します。
 
 ```
-docker-compose down -v
-```
+time node write_to_redis.js
+time node write_to_mysql.js
 
-## npm package install
-
-```
-npm install mysql
-npm install ioredis
-```
-
-## Write DB
-
-```
-time node mysql.js
-time node redis.js
+# データが格納されているか確認
 docker-compose exec mysql mysql -u demo -p demo -e "select count(*) from demo;"
 docker-compose exec redis redis-cli keys "*"
 ```
 
-## into docker container
+# Usage 2 : Read data from Redis and MySQL
+
+100万のランキングデータをRedisとMySQLから読み込み、速度を比較します。  
+Redisではソート済みハッシュを用いて格納しています。
+
+- Step1: Write data to Redis（First time only）
+
+```
+# ランキングデータ生成時は`docker-compose.yml`の`cpus: 0.1`を2箇所コメントアウトしてください。
+node store_ranking_data.js
+```
+
+※データ生成後は`docker-compose.yml`に記載がある`cpus: 0.1`のコメントアウトを外してください。
+
+- Step2: Read data from Redis
+
+```
+time node get_redis_ranking.js
+time node get_mysql_ranking.js
+```
+
+## Enter the Docker container and check the data
 
 ```
 docker-compose exec mysql mysql -u demo -p
@@ -47,13 +79,14 @@ zcard ranking
 zscore ranking mamezou
 ```
 
-## Ranking
+## How to Stop
 
 ```
-time node get_redis_ranking.js
-time node get_mysql_ranking.js
+docker-compose stop
 ```
 
-## Warning
+## How to Delete data
 
-- データ生成時は docker-compose.yml の CPU リミットを外すこと。
+```
+docker-compose down -v
+```
