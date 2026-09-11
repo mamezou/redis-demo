@@ -133,3 +133,7 @@ dist
 .svelte-kit
 
 # End of https://www.toptal.com/developers/gitignore/api/node
+### redis-demo ###
+infra/cdk.out/
+infra/dist/
+infra/cdk.context.json

@@ -1,7 +1,24 @@
 {
+  "name": "redis-demo",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Valkey (Redis 互換) と MySQL のランキング性能比較デモ。ローカル (docker compose) と AWS (CDK) の両方で同じ計測を実行する",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "seed": "node src/seed.js",
+    "bench": "node src/bench.js",
+    "build": "npm --prefix infra run build",
+    "aws:synth": "cd infra && npx cdk synth --profile demo01",
+    "aws:deploy": "npm ci --prefix infra && cd infra && npx cdk deploy --profile demo01",
+    "aws:bench": "bash scripts/aws-bench.sh",
+    "aws:destroy": "cd infra && npx cdk destroy --profile demo01"
+  },
   "dependencies": {
-    "faker": "^5.5.3",
-    "ioredis": "^4.28.0",
-    "mysql": "^2.18.1"
+    "@faker-js/faker": "^10.6.0",
+    "ioredis": "^5.11.1",
+    "mysql2": "^3.24.4"
   }
 }
