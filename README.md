@@ -114,6 +114,22 @@ npm run aws:destroy                                 # 計測が終わったら�
 - 手元で確認したいときは `aws ssm start-session --target <InstanceId> --profile demo01`
 - `cdk synth` だけなら `npm run aws:synth`。CDK のビルド (tsc) は `npm run build`
 
+### AWS 実行例 (2026-09-12、`feat/aws-cdk`、`npm run aws:bench` の既定 10 万件)
+
+- deploy 552 秒 → bench (seed 10 万件 + 5 回計測) 約 4 分 → destroy 約 8 分。スタック削除後に RDS スナップショット / ElastiCache / Secrets の残骸なし
+- EC2 t4g.small (Node v22.23.2, arm64) → Valkey 8.1.0 (cache.t4g.micro) / MySQL 8.4.9 (db.t4g.micro)。同一 VPC 内の別ホストなのでローカル (loopback) より往復が乗る
+- seed: Redis ZADD 100,000 件 363 ms、MySQL INSERT 100,000 件 2,814 ms。整合性 (Top-1、mamezou の順位・スコア) 両ストア一致
+
+| # | 項目 | Redis 中央値 | Redis p95 | MySQL 中央値 | MySQL p95 | MySQL/Redis |
+|---|---|---:|---:|---:|---:|---:|
+| 1a | 単純 write 10,000 件 (1 件ずつ await) | 2070 | 2598 | 32661 | 33387 | 15.8x |
+| 1b | 単純 write 10,000 件 (パイプライン / 1,000 行 INSERT) | 107 | 162 | 205 | 224 | 1.9x |
+| 2 | Top-100 取得 | 0.72 | 1.50 | 2.98 | 6.20 | 4.2x |
+| 3 | 特定ユーザーのスコアと順位 | 0.41 | 0.88 | 29.5 | 34.6 | 72.5x |
+| 4 | ページング (offset 10,000 から 500 件) | 3.60 | 4.76 | 7.19 | 8.59 | 2.0x |
+
+ローカル計測との違い: ネットワーク往復が加わるため、1 件ずつ await する 1a は往復回数がそのまま差になり (MySQL 15.8x)、Top-100 もローカルでは MySQL が僅差で速かったのが AWS では Redis が 4.2x 速い。順位取得 (3) は 10 万件で COUNT(*) の走査が効いて 72.5x。
+
 ### 概算コスト (東京リージョン、オンデマンド、1 時間動かした場合)
 
 単価は AWS Price List Bulk API (公式の料金 JSON/CSV、2026-09-11 取得) の値です。出典と取得方法は [docs/SOURCES.md](docs/SOURCES.md)。
