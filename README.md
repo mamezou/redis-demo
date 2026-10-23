@@ -13,7 +13,7 @@
 
 - Node.js 22 以上 (`.nvmrc` = 22。`engines.node >= 22`)
 - Docker (compose v2。`docker compose` サブコマンド)
-- AWS 版のみ: AWS CLI v2、`demo01` プロファイル (SSO)、`jq`
+- AWS 版のみ: AWS CLI v2、計測に使う AWS アカウントの資格情報、`jq`
 
 ## ローカルで計測する (3 コマンド)
 
@@ -48,7 +48,7 @@ npm run bench                    # 計測して Markdown 表を stdout に出力
 
 オプション: `npm run bench -- --runs 5 --writes 10000 --top 100 --page-offset 10000 --page-size 500 --user mamezou`
 
-### 実行例 (この dev VM でのローカル計測。`--users 20000`)
+### 実行例 (ローカル計測。`--users 20000`)
 
 環境: Linux x86_64 (3 vCPU)、Docker 24.0.2 / Compose v2.18.1、Node v24.13.1、valkey/valkey:8 (8.1.10)、mysql:8.4 (8.4.11)。
 2026-09-11 に `docker compose up -d` → `npm run seed -- --users 20000` → `npm run bench` を実行した出力そのままです。
@@ -95,14 +95,17 @@ AWS では EC2 ↔ ElastiCache / RDS のネットワーク往復が加わるた�
 
 前提:
 
-- `aws sso login --profile demo01` 済み (アカウント 393531704437 / ap-northeast-1)。スタックの account は固定せず、`--profile` の資格情報で決まります (region は `ap-northeast-1` 固定)
-- CDK bootstrap 済み (`aws cloudformation describe-stacks --stack-name CDKToolkit --profile demo01` で確認。未なら `cd infra && npx cdk bootstrap --profile demo01`)
+- 計測に使う AWS アカウントの資格情報を設定済みであること。名前付きプロファイルを使うときは `export AWS_PROFILE=<プロファイル名>` を実行しておきます
+  (SSO なら先に `aws sso login --profile <プロファイル名>`)。`aws sts get-caller-identity` で対象のアカウントか確認できます。
+  スタックのアカウントは資格情報で決まり、リージョンは `ap-northeast-1` に固定しています
+- 東京リージョンで CDK bootstrap 済みであること (`aws cloudformation describe-stacks --stack-name CDKToolkit --region ap-northeast-1` で確認。
+  未なら `cd infra && npx cdk bootstrap`)
 - EC2 は起動時に GitHub からこのリポジトリを `git clone` するので、計測したいブランチが push 済みであること。
   `main` 以外を使うときは `-c repoBranch=<branch>` を付けます
 
 ```bash
-npm run aws:deploy                                  # infra の npm ci → cdk deploy --profile demo01 (10〜15 分)
-# npm run aws:deploy -- -c repoBranch=feat/aws-cdk  # main にマージ前はブランチを指定
+npm run aws:deploy                                  # infra の npm ci → cdk deploy (10〜15 分)
+# npm run aws:deploy -- -c repoBranch=<branch>      # main 以外のブランチを計測するとき
 npm run aws:bench                                   # SSM Run Command で EC2 上の seed (10 万件) + bench を実行し、結果を表示
 npm run aws:destroy                                 # 計測が終わったら必ず削除
 ```
@@ -111,7 +114,7 @@ npm run aws:destroy                                 # 計測が終わったら�
 - 仕組み: `scripts/aws-bench.sh` (ローカル) がスタックの Outputs (`InstanceId` / `RedisEndpoint` / `MysqlEndpoint` / `SecretArn`) を読み、
   `aws ssm send-command` (AWS-RunShellScript) で EC2 上のスクリプトを実行します。EC2 側は `scripts/aws-env.sh` が
   Outputs と Secrets Manager から `REDIS_HOST` / `MYSQL_*` を組み立てます。SSH は使いません (インバウンドは 0)
-- 手元で確認したいときは `aws ssm start-session --target <InstanceId> --profile demo01`
+- 手元で確認したいときは `aws ssm start-session --target <InstanceId> --region ap-northeast-1`
 - `cdk synth` だけなら `npm run aws:synth`。CDK のビルド (tsc) は `npm run build`
 
 ### AWS 実行例 (2026-09-12、`feat/aws-cdk`、`npm run aws:bench` の既定 10 万件)
@@ -147,7 +150,7 @@ npm run aws:destroy                                 # 計測が終わったら�
 
 - 未確認: 上記以外の従量分 (AZ 間データ転送、CloudWatch、削除待ちシークレットの課金)。計測データは数 MB 程度なので影響は小さい見込みですが、金額は確認していません
 - **常時展開しません。** 計測が終わったら `npm run aws:destroy` で削除してください。1 日放置すると約 $1.9、1 か月で約 $57 かかります
-- 削除後の確認: `aws cloudformation describe-stacks --stack-name RedisDemoStack --profile demo01` がエラー (does not exist) になること
+- 削除後の確認: `aws cloudformation describe-stacks --stack-name RedisDemoStack --region ap-northeast-1` がエラー (does not exist) になること
 
 ## 環境変数
 

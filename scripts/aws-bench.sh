@@ -2,16 +2,16 @@
 # ローカルから SSM Run Command で EC2 計測ホスト上の `npm run seed && npm run bench` を実行し、結果を表示する。
 #   npm run aws:bench                  # 既定: --users 100000
 #   USERS=20000 npm run aws:bench
-# 環境変数: AWS_PROFILE (既定 demo01), STACK_NAME (既定 RedisDemoStack), AWS_REGION (既定 ap-northeast-1),
+# 環境変数: AWS_PROFILE (未設定なら AWS CLI の既定の資格情報), STACK_NAME (既定 RedisDemoStack), AWS_REGION (既定 ap-northeast-1),
 #           USERS (seed 件数), BENCH_ARGS (npm run bench に渡す追加引数)
 set -euo pipefail
 
-PROFILE="${AWS_PROFILE:-demo01}"
 STACK="${STACK_NAME:-RedisDemoStack}"
 REGION="${AWS_REGION:-ap-northeast-1}"
 USERS="${USERS:-100000}"
 BENCH_ARGS="${BENCH_ARGS:-}"
-AWS=(aws --profile "$PROFILE" --region "$REGION")
+# プロファイルは指定しない。AWS CLI が AWS_PROFILE (設定時) か既定の資格情報を使う
+AWS=(aws --region "$REGION")
 
 output() {
   "${AWS[@]}" cloudformation describe-stacks --stack-name "$STACK" \

@@ -9,7 +9,7 @@ const ctx = (key: string, fallback: string): string => {
 };
 
 new RedisDemoStack(app, 'RedisDemoStack', {
-  // account は固定しない (--profile の資格情報で決まる)。region は東京固定
+  // account は固定しない (実行時の資格情報で決まる)。region は東京固定
   env: { region: 'ap-northeast-1' },
   description: 'redis-demo: Valkey vs MySQL ranking benchmark (disposable, destroy after measuring)',
   // 計測ホストが clone するリポジトリ。ブランチは `-c repoBranch=feat/aws-cdk` のように上書きできる
