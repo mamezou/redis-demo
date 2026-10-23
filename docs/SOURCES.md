@@ -79,5 +79,5 @@ CDK の `MachineImage.latestAmazonLinux2023({ cpuType: ARM_64 })` (aws-cdk-lib 2
 
 | 事実 | 出典 |
 |---|---|
-| `aws-cdk-lib 2.179.0`, `aws-cdk 2.1021.0`, `typescript ~5.7.2`, `@types/node 22.10.2`, `ts-node ^10.9.2` | `/home/yuki/job/instructor/aws-demo/package.json` と同じ版 |
+| `aws-cdk-lib 2.179.0`, `aws-cdk 2.1021.0`, `typescript ~5.7.2`, `@types/node 22.10.2`, `ts-node ^10.9.2` | `infra/package.json` で指定 |
 | `ioredis 5.11.1`, `mysql2 3.24.4`, `@faker-js/faker 10.6.0` | `npm view` (2026-09-11)。`ioredis` は 6.0.0 も出ているが指定どおり v5 系にした |

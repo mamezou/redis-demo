@@ -11,10 +11,10 @@
     "seed": "node src/seed.js",
     "bench": "node src/bench.js",
     "build": "npm --prefix infra run build",
-    "aws:synth": "cd infra && npx cdk synth --profile demo01",
-    "aws:deploy": "npm ci --prefix infra && cd infra && npx cdk deploy --profile demo01",
+    "aws:synth": "cd infra && npx cdk synth",
+    "aws:deploy": "npm ci --prefix infra && cd infra && npx cdk deploy",
     "aws:bench": "bash scripts/aws-bench.sh",
-    "aws:destroy": "cd infra && npx cdk destroy --profile demo01"
+    "aws:destroy": "cd infra && npx cdk destroy"
   },
   "dependencies": {
     "@faker-js/faker": "^10.6.0",
