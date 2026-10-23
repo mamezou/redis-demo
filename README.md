@@ -86,12 +86,12 @@ AWS では EC2 ↔ ElastiCache / RDS のネットワーク往復が加わるた�
 
 ## AWS で計測する (3 コマンド)
 
-```
-VPC 10.42.0.0/16 (2 AZ, NAT なし)
-├─ public subnet   : EC2 t4g.small (Amazon Linux 2023 ARM, SSM 管理, インバウンド 0, パブリック IP あり)
-└─ isolated subnet : ElastiCache Valkey 8.1 cache.t4g.micro ×1 (6379 は EC2 の SG からのみ)
-                     RDS MySQL 8.4 db.t4g.micro 単一 AZ (3306 は EC2 の SG からのみ, パスワードは Secrets Manager 自動生成)
-```
+![AWS 版の構成図 (計測経路と操作経路)](docs/architecture.png)
+
+編集元は [docs/architecture.drawio](docs/architecture.drawio) です。
+
+- EC2 は Amazon Linux 2023 (ARM)。インバウンドの許可はなく、SSM で操作します
+- Valkey (6379) と MySQL (3306) は、EC2 のセキュリティグループからの接続に限って許可します。MySQL のパスワードは Secrets Manager が自動生成します
 
 前提:
 
@@ -166,5 +166,5 @@ src/            アプリ本体 (ESM)。config.js (環境変数) / clients.js (�
 scripts/        aws-bench.sh (ローカルから SSM 経由で実行) / aws-env.sh (EC2 側で環境変数を組み立て)
 infra/          CDK v2 (TypeScript)。bin/redis-demo.ts / lib/redis-demo-stack.ts
 docker-compose.yml  ローカル用 Valkey 8 + MySQL 8.4
-docs/           MIGRATION.md (旧版との対応表) / SOURCES.md (外部事実の出典)
+docs/           MIGRATION.md (旧版との対応表) / SOURCES.md (外部事実の出典) / architecture.drawio・architecture.png (AWS 版の構成図)
 ```
