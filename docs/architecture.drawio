@@ -32,16 +32,16 @@
           <mxGeometry height="480" width="850" x="450" y="145" as="geometry" />
         </mxCell>
         <mxCell id="az1" parent="1" style="fontFamily=IPAPGothic;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#00A4A6;dashed=1;dashPattern=4 3;verticalAlign=top;align=left;spacingLeft=14;spacingTop=7;fontSize=13;fontStyle=1;fontColor=#414D5C;" value="Availability Zone 1" vertex="1">
-          <mxGeometry height="190" width="780" x="500" y="185" as="geometry" />
+          <mxGeometry height="285" width="780" x="500" y="185" as="geometry" />
         </mxCell>
         <mxCell id="az2" parent="1" style="fontFamily=IPAPGothic;rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#00A4A6;dashed=1;dashPattern=4 3;verticalAlign=top;align=left;spacingLeft=14;spacingTop=7;fontSize=13;fontStyle=1;fontColor=#414D5C;" value="Availability Zone 2" vertex="1">
           <mxGeometry height="105" width="780" x="500" y="500" as="geometry" />
         </mxCell>
         <mxCell id="pub1" parent="1" style="fontFamily=IPAPGothic;points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontSize=13;fontStyle=1;grIcon=mxgraph.aws4.group_security_group;strokeColor=#7AA116;fontColor=#232F3E;" value="Public subnet 10.42.0.0/24" vertex="1">
-          <mxGeometry height="150" width="300" x="520" y="215" as="geometry" />
+          <mxGeometry height="245" width="300" x="520" y="215" as="geometry" />
         </mxCell>
         <mxCell id="iso1" parent="1" style="fontFamily=IPAPGothic;points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontSize=13;fontStyle=1;grIcon=mxgraph.aws4.group_security_group;strokeColor=#00A4A6;fontColor=#232F3E;" value="Private subnet (isolated) 10.42.2.0/24" vertex="1">
-          <mxGeometry height="150" width="420" x="840" y="215" as="geometry" />
+          <mxGeometry height="245" width="420" x="840" y="215" as="geometry" />
         </mxCell>
         <mxCell id="pub2" parent="1" style="fontFamily=IPAPGothic;points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontSize=13;fontStyle=1;grIcon=mxgraph.aws4.group_security_group;strokeColor=#7AA116;fontColor=#232F3E;" value="Public subnet 10.42.1.0/24" vertex="1">
           <mxGeometry height="60" width="300" x="520" y="530" as="geometry" />
@@ -74,22 +74,22 @@
           <mxGeometry height="40" width="200" x="570" y="313" as="geometry" />
         </mxCell>
         <mxCell id="valkey" parent="1" style="fontFamily=IPAPGothic;sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#C925D1;strokeColor=none;html=1;aspect=fixed;shape=mxgraph.aws4.elasticache_for_valkey;" value="" vertex="1">
-          <mxGeometry height="60" width="60" x="920" y="385" as="geometry" />
+          <mxGeometry height="60" width="60" x="1120" y="250" as="geometry" />
         </mxCell>
         <mxCell id="valkey-label" parent="1" style="fontFamily=IPAPGothic;text;html=1;fontSize=12;fontStyle=0;align=center;verticalAlign=top;fontColor=#232F3E;whiteSpace=wrap;labelBackgroundColor=#FFFFFF;" value="&lt;b&gt;ElastiCache (Valkey 8.1)&lt;/b&gt;&lt;br&gt;cache.t4g.micro ×1" vertex="1">
-          <mxGeometry height="40" width="190" x="855" y="448" as="geometry" />
+          <mxGeometry height="40" width="190" x="1055" y="313" as="geometry" />
         </mxCell>
         <mxCell id="rds" parent="1" style="fontFamily=IPAPGothic;sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#C925D1;strokeColor=none;html=1;aspect=fixed;shape=mxgraph.aws4.rds_instance;" value="" vertex="1">
-          <mxGeometry height="60" width="60" x="1120" y="385" as="geometry" />
+          <mxGeometry height="60" width="60" x="920" y="350" as="geometry" />
         </mxCell>
         <mxCell id="rds-label" parent="1" style="fontFamily=IPAPGothic;text;html=1;fontSize=12;fontStyle=0;align=center;verticalAlign=top;fontColor=#232F3E;whiteSpace=wrap;labelBackgroundColor=#FFFFFF;" value="&lt;b&gt;Amazon RDS for MySQL 8.4&lt;/b&gt;&lt;br&gt;db.t4g.micro・シングル AZ" vertex="1">
-          <mxGeometry height="40" width="190" x="1055" y="448" as="geometry" />
+          <mxGeometry height="40" width="190" x="855" y="413" as="geometry" />
         </mxCell>
-        <mxCell id="e-ec2-rds" edge="1" parent="1" source="ec2" target="rds" style="fontFamily=IPAPGothic;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;strokeColor=#147EBA;strokeWidth=2.5;fontSize=12;fontStyle=1;fontColor=#147EBA;exitX=1;exitY=0.25;entryX=0.5;entryY=0;" value="④ 計測 (3306)">
-          <mxGeometry x="-0.74" relative="1" as="geometry"><Array as="points"><mxPoint x="1150" y="265" /></Array></mxGeometry>
+        <mxCell id="e-ec2-rds" edge="1" parent="1" source="ec2" target="rds" style="fontFamily=IPAPGothic;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;strokeColor=#147EBA;strokeWidth=2.5;fontSize=12;fontStyle=1;fontColor=#147EBA;exitX=1;exitY=0.75;entryX=0.5;entryY=0;" value="④ 計測 (3306)">
+          <mxGeometry x="-0.45" relative="1" as="geometry"><Array as="points"><mxPoint x="950" y="295" /></Array></mxGeometry>
         </mxCell>
-        <mxCell id="e-ec2-valkey" edge="1" parent="1" source="ec2" target="valkey" style="fontFamily=IPAPGothic;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;strokeColor=#147EBA;strokeWidth=2.5;fontSize=12;fontStyle=1;fontColor=#147EBA;exitX=1;exitY=0.75;entryX=0.5;entryY=0;" value="④ 計測 (6379)">
-          <mxGeometry x="-0.56" relative="1" as="geometry"><Array as="points"><mxPoint x="950" y="295" /></Array></mxGeometry>
+        <mxCell id="e-ec2-valkey" edge="1" parent="1" source="ec2" target="valkey" style="fontFamily=IPAPGothic;edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;strokeColor=#147EBA;strokeWidth=2.5;fontSize=12;fontStyle=1;fontColor=#147EBA;exitX=1;exitY=0.25;entryX=0;entryY=0.25;" value="④ 計測 (6379)">
+          <mxGeometry x="-0.55" relative="1" as="geometry"></mxGeometry>
         </mxCell>
         <mxCell id="e-pc-ssm" edge="1" parent="1" source="pc" target="ssm" style="fontFamily=IPAPGothic;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;strokeColor=#414D5C;strokeWidth=1.5;fontSize=11;fontColor=#414D5C;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" value="① コマンドの送信">
           <mxGeometry y="14" relative="1" as="geometry"></mxGeometry>
@@ -106,7 +106,7 @@
         <mxCell id="e-igw-internet" edge="1" parent="1" source="igw" target="internet" style="fontFamily=IPAPGothic;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;labelBackgroundColor=#FFFFFF;strokeColor=#414D5C;strokeWidth=1.5;fontSize=11;fontColor=#414D5C;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" value="起動時の取得 (git clone・dnf・npm)">
           <mxGeometry x="-0.3" relative="1" as="geometry"></mxGeometry>
         </mxCell>
-        <mxCell id="note" parent="1" style="fontFamily=IPAPGothic;text;html=1;fontSize=12;fontStyle=0;align=left;verticalAlign=middle;fontColor=#414D5C;" value="注記: Valkey と RDS は単一ノードで、配置先の AZ (isolated サブネット 2 つのどちらか) は作成時に決まる" vertex="1">
+        <mxCell id="note" parent="1" style="fontFamily=IPAPGothic;text;html=1;fontSize=12;fontStyle=0;align=left;verticalAlign=middle;fontColor=#414D5C;" value="注記: Valkey と RDS の配置先 AZ は作成時に決まり、図では AZ 1 に置いている" vertex="1">
           <mxGeometry height="24" width="1000" x="190" y="680" as="geometry" />
         </mxCell>
         <mxCell id="legend-blue" parent="1" style="fontFamily=IPAPGothic;line;html=1;strokeWidth=2.5;strokeColor=#147EBA;" value="" vertex="1">
